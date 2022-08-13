@@ -30,3 +30,21 @@ export function getInterview(state, interview) {
   }
   return inter;
 }
+
+export function getInterviewersForDay(state, day) {
+  let dayCheck=[];
+  let arrayInterviewer =[];
+  for(let d of state.days) {
+      if(d.name === day) {
+        dayCheck = d.appointments;
+      }
+  }
+  if (dayCheck.length === 0) {
+    return [];
+  } else {
+    for (let dc of dayCheck) {
+      arrayInterviewer.push(state.appointments[dc]);
+    }
+  }
+  return arrayInterviewer;
+}
