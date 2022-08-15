@@ -36,15 +36,16 @@ export function getInterviewersForDay(state, day) {
   let arrayInterviewer =[];
   for(let d of state.days) {
       if(d.name === day) {
-        dayCheck = d.appointments;
+        dayCheck = d.interviewers;
       }
   }
   if (dayCheck.length === 0) {
     return [];
   } else {
     for (let dc of dayCheck) {
-      arrayInterviewer.push(state.appointments[dc]);
+      arrayInterviewer.push(state.interviewers[dc]);
     }
   }
+  console.log(state);
   return arrayInterviewer;
 }
