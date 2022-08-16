@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import axios from "axios";
 
 export default function useApplicationData(props) {
@@ -12,6 +11,11 @@ export default function useApplicationData(props) {
 
   const setDay = day => setState({ ...state, day });
 
+  //finding spots and update
+  function checkDay(day) {
+    const weekDay = { Monday: 0, Tuesday: 1, Wednesday: 2, Thursday: 3, Friday: 4 }
+    return weekDay[day]
+  }
 
   function bookInterview(id, interview) {
     console.log(id, interview);
@@ -19,19 +23,43 @@ export default function useApplicationData(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
+
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+    const weekDay = checkDay(state.day)
+    let dayObj = {
+      ...state.days[weekDay],
+      spots: state.days[weekDay]
+    }
+
+    if (!state.appointments[id].interview) { //for creating
+      dayObj = {
+        ...state.days[weekDay],
+        spots: state.days[weekDay].spots-1
+      }
+      console.log("after haha1", state.appointments[id].interview);
+    } else { //for editing
+      dayObj = {
+        ...state.days[weekDay],
+        spots: state.days[weekDay.spots]
+      }
+    }
+    let days = state.days
+    days[weekDay] = dayObj;
+
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {
         setState({
           ...state,
-          appointments
+          appointments, days
         })
       })
-      // .catch(err => console.error(err));  // removed as catch is used in index.js
+    // .catch(err => console.error(err));  // removed as catch is used in index.js
+
   }
+
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -41,14 +69,23 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
+
+    const weekDay = checkDay(state.day)
+    let dayObj = {
+      ...state.days[weekDay],
+      spots: state.days[weekDay].spots+1
+    }
+    let days = state.days
+    days[weekDay] = dayObj;
+
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
         setState({
           ...state,
-          appointments
+          appointments, days
         })
       })
-      // .catch(err => console.error(err)); //removed as catch is used in index.js
+    // .catch(err => console.error(err)); //removed as catch is used in index.js
   }
 
   useEffect(() => {
@@ -62,7 +99,7 @@ export default function useApplicationData(props) {
   }, []);
 
   return {
-    state, 
+    state,
     setDay,
     bookInterview,
     cancelInterview
