@@ -9,14 +9,14 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 
 export default function Application(props) {
-  
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
-  
+
   const setDay = day => setState({ ...state, day });
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const daysInterviewers = getInterviewersForDay(state, state.day);
@@ -31,22 +31,41 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(() => {
         setState({
           ...state,
           appointments
-        });
+        })
       })
+      // .catch(err => console.error(err));  // removed as catch is used in index.js
+  }
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then(() => {
+        setState({
+          ...state,
+          appointments
+        })
+      })
+      // .catch(err => console.error(err)); //removed as catch is used in index.js
   }
 
   useEffect(() => {
     Promise.all([
-      axios.get(`http://localhost:8001/api/days`),
-      axios.get(`http://localhost:8001/api/appointments`),
-      axios.get(`http://localhost:8001/api/interviewers`)
+      axios.get(`/api/days`),
+      axios.get(`/api/appointments`),
+      axios.get(`/api/interviewers`)
     ]).then((response) => {
-      setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data }));
+      setState(prev => ({ ...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data }));
     });
   }, []);
 
@@ -60,11 +79,11 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-        <DayList
-          days={state.days}
-          value={state.day}
-          onChange={setDay}
-        />
+          <DayList
+            days={state.days}
+            value={state.day}
+            onChange={setDay}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -76,15 +95,16 @@ export default function Application(props) {
         {dailyAppointments.map(appointment => {
           const interview = getInterview(state, appointment.interview);
           return (
-            <Appointment 
-            key={appointment.id}
-            id={appointment.id}
-            time={appointment.time}
-            interview={interview}
-            interviewers={daysInterviewers}
-            bookInterview={bookInterview}
+            <Appointment
+              key={appointment.id}
+              id={appointment.id}
+              time={appointment.time}
+              interview={interview}
+              interviewers={daysInterviewers}
+              bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
             />
-          );        
+          );
         })}
         <Appointment key="last" time="5pm" />
       </section>
