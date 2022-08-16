@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
-  const [student, setStudent] = useState(props.student || "");
+  // const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const reset = () => {
     setName("");
