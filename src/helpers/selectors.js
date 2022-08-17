@@ -37,7 +37,11 @@ export function getInterviewersForDay(state, day) {
   for(let d of state.days) {
       if(d.name === day) {
         dayCheck = d.interviewers;
+        break;
       }
+  }
+  if (!dayCheck) {
+    return [];
   }
   if (dayCheck.length === 0) {
     return [];
