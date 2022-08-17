@@ -39,7 +39,7 @@ export default function useApplicationData(props) {
         ...state.days[weekDay],
         spots: state.days[weekDay].spots-1
       }
-      console.log("after haha1", state.appointments[id].interview);
+
     } else { //for editing
       dayObj = {
         ...state.days[weekDay],
