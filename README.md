@@ -42,6 +42,19 @@ npm test
 npm run storybook
 ```
 
+## Screenshots
+
+*Daily schedule view*
+!["Screenshot"](https://github.com/mkim245/scheduler/blob/master/images/frontpage.PNG?raw=true)
+*Book an appointment*
+!["Screenshot"](https://github.com/mkim245/scheduler/blob/master/images/Creating.PNG?raw=true)
+*Edit an appointment*
+!["Screenshot"](https://github.com/mkim245/scheduler/blob/master/images/Editing.PNG?raw=true)
+*Cancel an appointment*
+!["Screenshot"](https://github.com/mkim245/scheduler/blob/master/images/Deleting.PNG?raw=true)
+*Show error message in saving/deleting*
+!["Screenshot"](https://github.com/mkim245/scheduler/blob/master/images/savingError.PNG?raw=true)
+
 ## Project Stack
 
 Front-End: React, Axios, JSX, HTML, SASS, JavaScript
