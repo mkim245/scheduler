@@ -35,7 +35,7 @@ export default function useApplicationData(props) {
     if (!state.appointments[id].interview) { //for creating
       dayObj = {
         ...state.days[weekDay],
-        spots: state.days[weekDay].spots-1
+        spots: state.days[weekDay].spots - 1
       }
 
     } else { //for editing
@@ -44,7 +44,7 @@ export default function useApplicationData(props) {
         spots: state.days[weekDay].spots
       }
     }
-   
+
 
     let days = [...state.days]
     days[weekDay] = dayObj;
@@ -70,11 +70,11 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
-    
+
     const weekDay = checkDay(state.day)
     let dayObj = {
       ...state.days[weekDay],
-      spots: state.days[weekDay].spots+1
+      spots: state.days[weekDay].spots + 1
     }
     let days = [...state.days]
     days[weekDay] = dayObj;

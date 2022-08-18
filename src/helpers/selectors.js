@@ -1,11 +1,11 @@
 export function getAppointmentsForDay(state, day) {
   //... returns an array of appointments for that day
-  let dayCheck=[];
-  let app =[];
-  for(let d of state.days) {
-      if(d.name === day) {
-        dayCheck = d.appointments;
-      }
+  let dayCheck = [];
+  let app = [];
+  for (let d of state.days) {
+    if (d.name === day) {
+      dayCheck = d.appointments;
+    }
   }
   if (dayCheck.length === 0) {
     return [];
@@ -18,9 +18,9 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-// return a new object containing the interview data 
-// when we pass it an object that contains the interviewer. 
-// Otherwise, the function should return null.
+  // return a new object containing the interview data 
+  // when we pass it an object that contains the interviewer. 
+  // Otherwise, the function should return null.
   let inter = {};
   if (interview === null) {
     return null;
@@ -32,13 +32,13 @@ export function getInterview(state, interview) {
 }
 
 export function getInterviewersForDay(state, day) {
-  let dayCheck=[];
-  let arrayInterviewer =[];
-  for(let d of state.days) {
-      if(d.name === day) {
-        dayCheck = d.interviewers;
-        break;
-      }
+  let dayCheck = [];
+  let arrayInterviewer = [];
+  for (let d of state.days) {
+    if (d.name === day) {
+      dayCheck = d.interviewers;
+      break;
+    }
   }
   if (!dayCheck) {
     return [];

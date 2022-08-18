@@ -18,7 +18,7 @@ export default function Application(props) {
   } = useApplicationData();
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const daysInterviewers = getInterviewersForDay(state, state.day);
-  
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -41,7 +41,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">        
+      <section className="schedule">
         {dailyAppointments.map(appointment => {
           const interview = getInterview(state, appointment.interview);
           return (
