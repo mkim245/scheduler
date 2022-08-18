@@ -20,6 +20,7 @@ export default function DayListItem(props) {
       return `no spots remaining`;
     }
   }
+
   return (
     <li 
       className = {dayClass} 
