@@ -46,10 +46,11 @@ export default function useApplicationData(props) {
     }
    
 
-    let days = state.days
+    let days = [...state.days]
     days[weekDay] = dayObj;
 
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
         setState({
           ...state,
@@ -75,10 +76,10 @@ export default function useApplicationData(props) {
       ...state.days[weekDay],
       spots: state.days[weekDay].spots+1
     }
-    let days = state.days
+    let days = [...state.days]
     days[weekDay] = dayObj;
 
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         setState({
           ...state,
